@@ -189,7 +189,7 @@ export const ExternalApiComponent = () => {
             <h6 className="muted">Result</h6>
             <Highlight>
               <span>{JSON.stringify(state.apiMessage, null, 2)}</span>
-              <div>{JSON.stringify(state.token)}</div>
+              <div>JWT: {JSON.stringify(state.token)}</div>
             </Highlight>
           </div>
         )}
