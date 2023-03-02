@@ -63,7 +63,6 @@ export const ExternalApiComponent = () => {
       });
 
       const responseData = await response.json();
-      console.log("response data", responseData, token);
       setState({
         ...state,
         showResult: true,
