@@ -33,17 +33,17 @@ const checkJwt = jwt({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: `https://${authConfig.domain}/.well-known/jwks.json`,
+    jwksUri: `https://${authConfig.domain}/.well-known/jwks.json`
   }),
 
   audience: authConfig.audience,
   issuer: `https://${authConfig.domain}/`,
-  algorithms: ["RS256"],
+  algorithms: ["RS256"]
 });
 
 app.get("/api/external", checkJwt, (req, res) => {
   res.send({
-    msg: "Your access token was successfully validated!",
+    msg: "Your access token was successfully validated!"
   });
 });
 

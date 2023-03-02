@@ -12,25 +12,23 @@ export const ExternalApiComponent = () => {
     showResult: false,
     apiMessage: "",
     error: null,
+    token: null
   });
 
-  const {
-    getAccessTokenSilently,
-    loginWithPopup,
-    getAccessTokenWithPopup,
-  } = useAuth0();
+  const { getAccessTokenSilently, loginWithPopup, getAccessTokenWithPopup } =
+    useAuth0();
 
   const handleConsent = async () => {
     try {
       await getAccessTokenWithPopup();
       setState({
         ...state,
-        error: null,
+        error: null
       });
     } catch (error) {
       setState({
         ...state,
-        error: error.error,
+        error: error.error
       });
     }
 
@@ -42,12 +40,12 @@ export const ExternalApiComponent = () => {
       await loginWithPopup();
       setState({
         ...state,
-        error: null,
+        error: null
       });
     } catch (error) {
       setState({
         ...state,
-        error: error.error,
+        error: error.error
       });
     }
 
@@ -60,21 +58,22 @@ export const ExternalApiComponent = () => {
 
       const response = await fetch(`${apiOrigin}/api/external`, {
         headers: {
-          Authorization: `Bearer ${token}`,
-        },
+          Authorization: `Bearer ${token}`
+        }
       });
 
       const responseData = await response.json();
-
+      console.log("response data", responseData, token);
       setState({
         ...state,
         showResult: true,
         apiMessage: responseData,
+        token: token
       });
     } catch (error) {
       setState({
         ...state,
-        error: error.error,
+        error: error.error
       });
     }
   };
@@ -183,10 +182,15 @@ export const ExternalApiComponent = () => {
 
       <div className="result-block-container">
         {state.showResult && (
-          <div className="result-block" data-testid="api-result">
+          <div
+            className="result-block"
+            data-testid="api-result"
+            style={{ maxWidth: "80vw" }}
+          >
             <h6 className="muted">Result</h6>
             <Highlight>
               <span>{JSON.stringify(state.apiMessage, null, 2)}</span>
+              <div>{JSON.stringify(state.token)}</div>
             </Highlight>
           </div>
         )}
@@ -196,5 +200,5 @@ export const ExternalApiComponent = () => {
 };
 
 export default withAuthenticationRequired(ExternalApiComponent, {
-  onRedirecting: () => <Loading />,
+  onRedirecting: () => <Loading />
 });
